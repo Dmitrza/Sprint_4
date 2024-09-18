@@ -1,12 +1,16 @@
-package ru.praktikum_services.qa_scooter.orderTest;
+package ru.praktikum_services.qa_scooter.test;
 
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.junit.Test;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import ru.praktikum_services.qa_scooter.pom.MainPage;
+import ru.praktikum_services.qa_scooter.pom.OrderPage;
 
 import static org.junit.Assert.*;
 
@@ -24,7 +28,7 @@ public class OrderTest {
     private final String samokatColour;
     private final String comment;
 
-    //private WebDriver driver;
+    private WebDriver driver;
 
     public OrderTest (String firstName, String lastName, String address, String metroStation,
                       String phoneNumber, String toWhenBringSamokat, String rentDuration,
@@ -48,18 +52,21 @@ public class OrderTest {
         };
     }
 
-    @Test
-    public void OrderProcess() {
+    @Before
+    public void start() {
         ChromeOptions options = new ChromeOptions();
-        WebDriver driver = new ChromeDriver(options);
-        driver.get("https://qa-scooter.praktikum-services.ru/");
+        driver = new ChromeDriver(options);
+    }
 
-        MainPageOrder objMainPage = new MainPageOrder(driver);
+    @Test
+    public void orderProcess() {
+
+        MainPage objMainPage = new MainPage(driver);
+        objMainPage.getUrl();
         objMainPage.cookiesAcceptClick();
         objMainPage.upperOrderButtonClick();
 
-
-        OrderPageScooter objOrderPage = new OrderPageScooter(driver);
+        OrderPage objOrderPage = new OrderPage(driver);
         objOrderPage.waitForLoadOrderPage();
         objOrderPage.setFirstName(firstName);
         objOrderPage.setLastName(lastName);
@@ -79,27 +86,25 @@ public class OrderTest {
         objOrderPage.yesButtonPopupClick();
 
         assertEquals("Заказ не оформлен", true, objOrderPage.checkCompletedOrderPopup());
-
-        driver.quit();
     }
 
     @Test
     public void lowerOrderButtonTest() {
-        ChromeOptions options = new ChromeOptions();
-        WebDriver driver = new ChromeDriver(options);
-        driver.get("https://qa-scooter.praktikum-services.ru/");
 
-        MainPageOrder objMainPage = new MainPageOrder(driver);
+        MainPage objMainPage = new MainPage(driver);
+        objMainPage.getUrl();
         objMainPage.cookiesAcceptClick();
         objMainPage.lowerOrderButtonClick();
 
-        OrderPageScooter objOrderPage = new OrderPageScooter(driver);
+        OrderPage objOrderPage = new OrderPage(driver);
         objOrderPage.waitForLoadOrderPage();
 
         assertEquals("Кнопка Заказать внизу страницы не работает или работает некорректно",
                 true, objOrderPage.checkFirstNameField());
-
-        driver.quit();
     }
 
+    @After
+    public void tearDown() {
+        driver.quit();
+    }
 }

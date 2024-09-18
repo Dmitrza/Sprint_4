@@ -1,4 +1,4 @@
-package ru.praktikum_services.qa_scooter.orderTest;
+package ru.praktikum_services.qa_scooter.pom;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -7,8 +7,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class OrderPageScooter {
-    private WebDriver driver;
+public class OrderPage {
+    private final WebDriver driver;
+    private final String url = "https://qa-scooter.praktikum-services.ru/order/";
 
     //Принять куки
     private By cookiesAcceptButton = By.id("rcc-confirm-button");
@@ -46,14 +47,22 @@ public class OrderPageScooter {
     //Сообщения об ошибках Страница 2
     private By commentErrorMessage = By.xpath(".//div[text()='Комментарий для курьера']");
 
+    private By samokatLogo = By.xpath(".//img[@alt = 'Scooter']");
+    private By yandexLogo = By.xpath(".//img[@alt = 'Yandex']");
 
-    public OrderPageScooter(WebDriver driver) {
+
+    public OrderPage(WebDriver driver) {
         this.driver = driver;
     }
+
+    public void getUrl() {
+        driver.get(url);
+    }
+
     public void waitForLoadOrderPage() {
     new WebDriverWait(driver, Duration.ofSeconds(3))
             .until(ExpectedConditions.visibilityOfElementLocated(firstNameField));
-}
+    }
 
     public void cookiesAcceptClick() {
         driver.findElement(cookiesAcceptButton).click();
@@ -77,7 +86,8 @@ public class OrderPageScooter {
 
     public void setMetroStation(String metroStation) {
         driver.findElement(metroStationField).click();
-        driver.findElement(By.xpath(".//div[text()='" + metroStation + "']/parent::button")).click();
+        String inputMetroStation = String.format(".//div[text()='%s']/parent::button", metroStation);
+        driver.findElement(By.xpath(inputMetroStation)).click();
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -146,6 +156,19 @@ public class OrderPageScooter {
 
     public String commentErrorMessage() {
         return driver.findElement(commentErrorMessage).getText();
+    }
+
+    public void waitForLoadYandexPage() {
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(".//a[@aria-label = 'Яндекс']"))));
+    }
+
+    public void samokatLogoClick() {
+        driver.findElement(samokatLogo).click();
+    }
+
+    public void yandexLogoClick() {
+        driver.findElement(yandexLogo).click();
     }
 
 }
