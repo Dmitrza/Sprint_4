@@ -8,7 +8,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import ru.praktikum_services.qa_scooter.pom.MainPage;
 import ru.praktikum_services.qa_scooter.pom.StatusPage;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class WrongNumberPageTest {
 
@@ -31,7 +31,7 @@ public class WrongNumberPageTest {
         objStatusPage.waitNotFoundPic();
         boolean actual = objStatusPage.checkNotFoundPic();
 
-        assertEquals("Нет надписи, что заказа нет", true, actual);
+        assertTrue("Нет надписи, что заказа нет", actual);
     }
 
     @After

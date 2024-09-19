@@ -10,7 +10,7 @@ import java.time.Duration;
 
 public class MainPage {
     private final WebDriver driver;
-    private final String url = "https://qa-scooter.praktikum-services.ru/";
+    public static final String URL = "https://qa-scooter.praktikum-services.ru/";
 
     // private By questionAccordion = By.xpath(".//div[text()='%s']");
     // private By answerToQuestion = By.xpath(".//div[@id='accordion__panel-0']/p");
@@ -28,7 +28,7 @@ public class MainPage {
     }
 
     public void getUrl() {
-        driver.get(url);
+        driver.get(URL);
     }
 
 

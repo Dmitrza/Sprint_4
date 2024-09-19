@@ -85,7 +85,7 @@ public class OrderTest {
         objOrderPage.orderButtonOrderPageClick();
         objOrderPage.yesButtonPopupClick();
 
-        assertEquals("Заказ не оформлен", true, objOrderPage.checkCompletedOrderPopup());
+        assertTrue("Заказ не оформлен", objOrderPage.checkCompletedOrderPopup());
     }
 
     @Test
@@ -99,8 +99,7 @@ public class OrderTest {
         OrderPage objOrderPage = new OrderPage(driver);
         objOrderPage.waitForLoadOrderPage();
 
-        assertEquals("Кнопка Заказать внизу страницы не работает или работает некорректно",
-                true, objOrderPage.checkFirstNameField());
+        assertTrue("Кнопка Заказать внизу страницы не работает или работает некорректно", objOrderPage.checkFirstNameField());
     }
 
     @After

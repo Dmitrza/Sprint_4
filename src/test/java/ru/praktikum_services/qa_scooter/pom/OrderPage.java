@@ -9,7 +9,7 @@ import java.time.Duration;
 
 public class OrderPage {
     private final WebDriver driver;
-    private final String url = "https://qa-scooter.praktikum-services.ru/order/";
+    public static final String URL = "https://qa-scooter.praktikum-services.ru/order/";
 
     //Принять куки
     private By cookiesAcceptButton = By.id("rcc-confirm-button");
@@ -56,7 +56,7 @@ public class OrderPage {
     }
 
     public void getUrl() {
-        driver.get(url);
+        driver.get(URL);
     }
 
     public void waitForLoadOrderPage() {
